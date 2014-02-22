@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Chat en Vivo con Web Sockets</title>
+		<link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+		<link href="css/estilos.css" rel="stylesheet"/>
+		<!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
+		<!--
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		-->
+		<script src="javascript/jquery-1.10.2.min.js"></script>
+		
+		<script src="/socket.io/socket.io.js"></script>
+
+		<script type="text/javascript">
+		
+		$(function(){
+			
+			/*NOS CONECTAMOS AL WEBSOCKET DEFINIDOEN EL SERVIDOR*/
+			var socket = io.connect("http://localhost:8021");
+			socket.on("mensaje_al_cliente", function(datosServidor){
+				
+				var mensajesCaja = $("#mensajes");
+				var mensaje = "<div class='mensaje'><span>" + datosServidor.nombre +":</span>" + datosServidor.mensaje + "</div>";
+				
+				mensajesCaja.append(mensaje);
+				
+				
+			});
+			
+			/*boton es un OBJETO DE JQUERY*/
+			var boton = $("#boton");
+			boton.click(function(){
+				
+				var mensajeCaja = $("#mensaje-usuario");
+				var nombreCaja = $("#nombre-usuario");
+				
+				var mensaje = mensajeCaja.val();
+				var nombre = nombreCaja.val();
+				
+				
+				socket.emit("mensaje_al_servidor",{
+					mensaje:mensaje,
+					nombre:nombre
+				});
+				
+			});
+			
+		});		
+			
+		</script>
+	</head>
+	<body>
+		<div id="chat">
+			<!-- titulos del chat -->
+			<h1>Chat en Vivo</h1>
+			<h4>Mensajes de los usuarios:</h4>
+
+			<!-- caja de mensajes de los nuevos usuarios -->
+			<div id="mensajes">
+			</div>
+			
+
+			<!-- mensaje del usuario -->
+			<p>
+				<label>Mensaje:</label>
+				<input id="mensaje-usuario" type="text" placeholder="Escriba su mensaje aqui"/>
+			</p>
+
+			<!-- nombre del usuario -->
+			<p>
+				<label>Usuario:</label>
+				<input id="nombre-usuario" type="text" placeholder="Su nombre aqui"/>
+			</p>
+
+			<!-- boton de enviar -->
+			<button id="boton">
+				Enviar
+			</button>
+
+		</div>
+	</body>
+</html>
