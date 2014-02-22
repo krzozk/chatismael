@@ -6,7 +6,12 @@ var socketio = require("socket.io");
 
 var app = express();
 var servidor = http.createServer(app);
-servidor.listen(8021);
+if(process.env.OPENSHIFT_NODEJS_PORT){
+	servidor.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP);
+}else{
+	servidor.listen(8021);
+}
+
 
 //---- configuracion de carpetas estaticas ----
 app.use("/css", express.static(__dirname + "/css"));
