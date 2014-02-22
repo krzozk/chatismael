@@ -10,10 +10,19 @@ body {
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
+    /*para definir esuinas redondas*/
+   /*-webkit-border-radius:.em*/
+   /*-moz-border-radius:5.em*/
+   border-radius: .5em;
+   /*se empieza en la esquina superior izquierda y se avnaza en el sentido de las manecillas del reloj*/
+   border-radius:.5em .5em 1.em 1em;
+   box-shadow:10px 10px 15px 15px black
 }
 
 h1 {
 	text-align: center;
+	/*agregar soporte con navegador moz etc*/
+	text-shadow:10px 10px 15px black
 }
 
 h1, h4, p {
