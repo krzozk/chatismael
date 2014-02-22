@@ -3,6 +3,7 @@ var dust = require("dustjs-linkedin");
 var cons = require("consolidate");
 var http = require("http"); //LIBRERIA INTERNA
 var socketio = require("socket.io");
+var validator = require("validator");
 
 var app = express();
 var servidor = http.createServer(app);
@@ -42,37 +43,14 @@ io.sockets.on("connection", function(socket){
 	//PRODUCIRSE ESE EVENTO
 	socket.on("mensaje_al_servidor", function(datosCliente){
 		
+		//filtrar datos de posibles xss
+		var mensaje = validator.escape(datosCliente.mensaje);
+		var nombre = validator.escape(datosCliente.nombre);
 		//io.sockest = TODOS LOS USUARIOS CONECTADOS
 		//emit = "PRODUCE UN EVENTO QUE PUEDE ESCUCHAR ELCLIENTE"
 		//O EL SERVIDOR
-		io.sockets.emit("mensaje_al_cliente", datosCliente);
+		io.sockets.emit("mensaje_al_cliente", {mensaje:mensaje, nombre:nombre});
 		
 	});
 	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

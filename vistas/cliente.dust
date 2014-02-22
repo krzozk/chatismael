@@ -18,7 +18,7 @@
 		$(function(){
 			
 			/*NOS CONECTAMOS AL WEBSOCKET DEFINIDOEN EL SERVIDOR*/
-			var socket = io.connect(docuemnt.location.origin);
+			var socket = io.connect(document.location.origin);
 			socket.on("mensaje_al_cliente", function(datosServidor){
 				
 				var mensajesCaja = $("#mensajes");
